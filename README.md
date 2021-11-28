@@ -42,6 +42,7 @@ This README would normally document whatever steps are necessary to get your app
     * "jsonwebtoken": "^8.5.1",
     * "mongoose": "^6.0.12",
     * "nodemon": "^2.0.14",
+    * "socket.io": "^4.4.0",
     * "uuid": "^8.3.2"
 
 * Google autentication
