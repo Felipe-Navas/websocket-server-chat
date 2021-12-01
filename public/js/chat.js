@@ -2,6 +2,14 @@
 let usuarioAutenticado = null;
 let socket = null;
 
+// Referencias html
+const txtUid     = document.querySelector('#txtUid');
+const txtMensaje = document.querySelector('#txtMensaje');
+const ulUsuarios = document.querySelector('#ulUsuarios');
+const ulMensajes = document.querySelector('#ulMensajes');
+const btnSalir   = document.querySelector('#btnSalir');
+
+
 // Validar el token del localstorage
 const validarJWT = async() => {
     const token = localStorage.getItem('token') || '';
@@ -20,8 +28,40 @@ const validarJWT = async() => {
     // Restauro el JWT
     localStorage.setItem('token', tokenDB);
     usuarioAutenticado = userDB;
-    console.log(usuarioAutenticado, token)
+
+    document.title = usuarioAutenticado.nombre;
+
+    await conectarSocket();
 };
+
+const conectarSocket = async() => {
+    socket = io({
+        'extraHeaders': {
+            'x-token': localStorage.getItem('token')
+        }
+    });
+
+    socket.on('connect', () => {
+        console.log('Sockets Online');
+    });
+    
+    socket.on('disconnect', () => {
+        console.log('Sockets Offline');
+    });
+
+    socket.on('recibir-mensajes', () => {
+        // TODO:
+    });
+
+    socket.on('usuarios-activos', () => {
+        // TODO:
+    });
+
+    socket.on('mensaje-privado', () => {
+        // TODO:
+    });
+};
+
 
 const main = async() => {
     // Validar JWT
@@ -31,4 +71,3 @@ const main = async() => {
 main();
 
 
-// const socket = io();
