@@ -54,9 +54,10 @@ const conectarSocket = async () => {
 
     socket.on('usuarios-activos', mostrarUsuarios);
 
-    socket.on('mensaje-privado', () => {
-        // TODO:
-    });
+    // TODO: Crear nuevo metodo mostrarMensajesPrivados similar a mostrarMensajes:
+    // socket.on('mensaje-privado', mostrarMensajesPrivados);
+    // modificando la clase ChatMensajes para que soporte una nueva lista con los mensajes privados
+    socket.on('mensaje-privado', mostrarMensajes);
 };
 
 
