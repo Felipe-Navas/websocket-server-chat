@@ -1,2 +1,2 @@
 # Nota
-En este directorio se van a guardar todos los archivos subidos al servidios por defecto.
+All files uploaded to the server will be saved in this directory by default.
