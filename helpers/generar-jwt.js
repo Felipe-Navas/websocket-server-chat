@@ -1,53 +1,53 @@
-const jwt = require('jsonwebtoken');
-const { Usuario } = require('../models');
+const jwt = require('jsonwebtoken')
+const { Usuario } = require('../models')
 
-const generarJWT = ( uid = '' ) => {
+const generarJWT = (uid = '') => {
+  return new Promise((resolve, reject) => {
+    const payload = { uid }
 
-    return new Promise( (resolve, reject) => {
-        const payload = { uid };
-        
-        jwt.sign( payload, process.env.SECRETOPRIVATEKEY, {
-            expiresIn: '4h',
-        }, ( err, token ) => {
-            if (err){
-                console.log(err);
-                reject('No se pudo generar el token');
-            } else {
-                resolve( token );
-            };
-        });
-    });
+    jwt.sign(
+      payload,
+      process.env.SECRETOPRIVATEKEY,
+      {
+        expiresIn: '4h',
+      },
+      (err, token) => {
+        if (err) {
+          console.log(err)
+          reject('No se pudo generar el token')
+        } else {
+          resolve(token)
+        }
+      }
+    )
+  })
+}
 
-};
+const comprobarJWT = async (token = '') => {
+  try {
+    if (token.length < 10) {
+      return null
+    }
 
-const comprobarJWT = async(token = '') => {
+    const { uid } = jwt.verify(token, process.env.SECRETOPRIVATEKEY)
 
-    try {
-        if ( token.length < 10 ) {
-            return null;
-        };
-        
-        const { uid } = jwt.verify( token, process.env.SECRETOPRIVATEKEY );
+    const usuario = await Usuario.findById(uid)
 
-        const usuario = await Usuario.findById( uid );
-
-        if ( usuario ) {
-            if ( usuario.estado ) {
-                return usuario;
-            } else {
-                return null;
-            };
-        } else {            
-            return null;
-        };
-
-    } catch (error) {
-        return null;
-    };
-};
-
+    if (usuario) {
+      if (usuario.estado) {
+        return usuario
+      } else {
+        return null
+      }
+    } else {
+      return null
+    }
+  } catch (error) {
+    return null
+  }
+}
 
 module.exports = {
-    generarJWT,
-    comprobarJWT,
-};
+  generarJWT,
+  comprobarJWT,
+}

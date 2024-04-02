@@ -1,45 +1,42 @@
-const { response, request } = require('express');
+const { response, request } = require('express')
 
-const esAdminRole = ( req = request, res = response, next ) => {
+const esAdminRole = (req = request, res = response, next) => {
+  if (!req.usuarioAutenticado) {
+    return res.status(500).json({
+      msg: 'Se quiere validar el rol sin validar el token antes',
+    })
+  }
 
-    if ( !req.usuarioAutenticado ) {
-        return res.status(500).json({
-            msg: 'Se quiere validar el rol sin validar el token antes'
-        });
-    };
+  const { rol, nombre } = req.usuarioAutenticado
 
-    const { rol, nombre } = req.usuarioAutenticado;
+  if (rol !== 'ADMIN_ROLE') {
+    return res.status(401).json({
+      msg: `${nombre} no esta habilitado para esta acción - Tiene que ser administrador`,
+    })
+  }
 
-    if ( rol !== 'ADMIN_ROLE' ) {
-        return res.status(401).json({
-            msg: `${nombre} no esta habilitado para esta acción - Tiene que ser administrador`
-        });
-    };
+  next()
+}
 
-    next();
-};
+const tieneRole = (...roles) => {
+  return (req = request, res = response, next) => {
+    if (!req.usuarioAutenticado) {
+      return res.status(500).json({
+        msg: 'Se quiere validar el rol sin validar el token antes',
+      })
+    }
 
-const tieneRole = ( ...roles ) => {
+    if (!roles.includes(req.usuarioAutenticado.rol)) {
+      return res.status(401).json({
+        msg: `Esta operación solo se puede hacer con alguno de estos roles: ${roles}`,
+      })
+    }
 
-    return ( req = request, res = response, next ) => {
-
-        if ( !req.usuarioAutenticado ) {
-            return res.status(500).json({
-                msg: 'Se quiere validar el rol sin validar el token antes'
-            });
-        };
-
-        if ( !roles.includes( req.usuarioAutenticado.rol )) {
-            return res.status(401).json({
-                msg: `Esta operación solo se puede hacer con alguno de estos roles: ${ roles }`
-            });
-        };
-
-        next();
-    };
-};
+    next()
+  }
+}
 
 module.exports = {
-    esAdminRole,
-    tieneRole,
-};
+  esAdminRole,
+  tieneRole,
+}
