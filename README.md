@@ -42,6 +42,7 @@ git clone https://github.com/Felipe-Navas/websocket-server-chat.git && cd websoc
     * Configure your OAuth Consent Screen https://console.cloud.google.com/apis/credentials/consent?project=your_proyect_name
     * Create your credentials https://console.cloud.google.com/apis/credentials?project=your_proyect_name
     * Modify the data-client_id in the /public/index.html file with your google client id
+
 ### Executing program
 
 ```
@@ -50,7 +51,7 @@ npm start
 
 Preview of the principal page to login:
 
-<img width="350" src="assets/previewLogin.png" alt="Preview of the principal page" />
+<img width="350" src="assets/previewLogin.png" alt="Preview of the principal page to login" />
 
 Preview of the screen of chat:
 

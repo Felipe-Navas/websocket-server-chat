@@ -1,0 +1,683 @@
+{
+	"info": {
+		"_postman_id": "4babd194-ddd3-4921-abaf-06625f277362",
+		"name": "websocket-server-chat",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14565767"
+	},
+	"item": [
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Crear usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Pepe Argento\",\r\n    \"correo\": \"pepe@gmail.com\",\r\n    \"password\": \"felipe\",\r\n    \"rol\": \"ADMIN_ROLE\",\r\n    \"google\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/usuarios",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar usuario",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Felipe Navas\",\r\n    \"correo\": \"correo@test1.com\",\r\n    \"password\": \"123456\",\r\n    \"rol\": \"VENTAS_ROLE\",\r\n    \"google\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/usuarios/617ec42ef9b9a9a8526e8772",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"617ec42ef9b9a9a8526e8772"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener usuarios",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/usuarios",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"usuarios"
+							],
+							"query": [
+								{
+									"key": "limite",
+									"value": "a",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MTdmZDhlNjE5MTBlM2Q3MjUxMjhmYzMiLCJpYXQiOjE2MzYwNTA4ODYsImV4cCI6MTYzNjA2NTI4Nn0.4X53RemZf4cz1fVzRgbqUt2udKTgBKURF5KxOnwChQU",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/usuarios/617ec42ef9b9a9a8526e8772",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"617ec42ef9b9a9a8526e8772"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categorias",
+			"item": [
+				{
+					"name": "Obtener categorias",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/categorias?limite=10&desde=0",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"categorias"
+							],
+							"query": [
+								{
+									"key": "limite",
+									"value": "10"
+								},
+								{
+									"key": "desde",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener categoria por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/categorias/660c1bc086e18cea3cdeb1f4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"categorias",
+								"660c1bc086e18cea3cdeb1f4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear categoria",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NjBjMWFjNzg2ZTE4Y2VhM2NkZWIxZTAiLCJpYXQiOjE3MTIwNjk1NTAsImV4cCI6MTcxMjA4Mzk1MH0.BlVHDNAs4e3GffSeK3SsJM7jGl3cTFkog1MHz391d1A",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Galletas\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/categorias",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"categorias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar categoria",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MTdmZDhlNjE5MTBlM2Q3MjUxMjhmYzMiLCJpYXQiOjE2MzYxMjU5NDMsImV4cCI6MTYzNjE0MDM0M30.mZpXd5ckVmf84s3l5Lj26Gk6Ee9egCL4ZJLmWXD6R8E",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Facturas\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/categorias/618426f601b8b38d00fcc3e6",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"categorias",
+								"618426f601b8b38d00fcc3e6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar categoria",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MTdmZDhlNjE5MTBlM2Q3MjUxMjhmYzMiLCJpYXQiOjE2MzYxMjY0OTUsImV4cCI6MTYzNjE0MDg5NX0.6Xl6o5WBtC6yr4WWNCwDZ2xR3DUtNXH1zKqmI1X3924",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/categorias/618426f601b8b38d00fcc3e6",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"categorias",
+								"618426f601b8b38d00fcc3e6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Productos",
+			"item": [
+				{
+					"name": "Obtener productos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/productos?limite=10&desde=0",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"productos"
+							],
+							"query": [
+								{
+									"key": "limite",
+									"value": "10"
+								},
+								{
+									"key": "desde",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener producto por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/productos/6187ffcd7c705d381fdfd05c",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"productos",
+								"6187ffcd7c705d381fdfd05c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear producto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NjBjMWFjNzg2ZTE4Y2VhM2NkZWIxZTAiLCJpYXQiOjE3MTIwNjk2NDQsImV4cCI6MTcxMjA4NDA0NH0.ECNqoUyc6KpPpPjQWaP483zKjWT6vkuIbQMGXnzx9Yo",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"terrabusi\",\r\n    \"precio\": 200,\r\n    \"categoria\": \"Galletas\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/productos",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"productos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar producto",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NjBjMWFjNzg2ZTE4Y2VhM2NkZWIxZTAiLCJpYXQiOjE3MTIwNjk3MjgsImV4cCI6MTcxMjA4NDEyOH0.wVC9TbTZ_KL7LiVaLRno-mjjFhHVJwz-BGmqZogl6sM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Torrado\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/productos/660c1c2686e18cea3cdeb20d",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"productos",
+								"660c1c2686e18cea3cdeb20d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar producto",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MTdmZDhkYzE5MTBlM2Q3MjUxMjhmYmIiLCJpYXQiOjE2MzYzMDI4NjAsImV4cCI6MTYzNjMxNzI2MH0.chsnY7ncNIOvDvfclinY3Rq61K9mSqPiClU9vZlpoR4",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/productos/6187ffa77c705d381fdfd052",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"productos",
+								"6187ffa77c705d381fdfd052"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"correo\": \"felipe@gmail.com\",\r\n    \"password\": \"felipe\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/auth/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Validar y Renovar JWT",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"correo\": \"felipe@gmail.com\",\r\n    \"password\": \"felipe\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/auth/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Google Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_token\": \"Token de google\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/auth/google",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"google"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/buscar/productos/a",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"buscar",
+						"productos",
+						"a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Subir archivo",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MTdmZDhkYzE5MTBlM2Q3MjUxMjhmYmIiLCJpYXQiOjE2MzY0ODMzNDksImV4cCI6MTYzNjQ5Nzc0OX0.CT_RNvKKOK0v_jeMEOupZ86hS_AAHHlg4ycVjewEars",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "archivo",
+							"type": "file",
+							"src": "/C:/Felipe/GEN/dwh5008-msms-avisos-202009.txt"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/api/uploads",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"uploads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar imagen Usuario",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "archivo",
+							"type": "file",
+							"src": "/C:/Felipe/Foto perfil_mini.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/api/uploads/usuarios/617fd8dc1910e3d725128fbb",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"uploads",
+						"usuarios",
+						"617fd8dc1910e3d725128fbb"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar imagen Productos",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "archivo",
+							"type": "file",
+							"src": "/C:/Felipe/Foto perfil_mini.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/api/uploads/productos/6187ffcd7c705d381fdfd05c",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"uploads",
+						"productos",
+						"6187ffcd7c705d381fdfd05c"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener imagen Productos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/uploads/productos/6187ffcd7c705d381fdfd05c",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"uploads",
+						"productos",
+						"6187ffcd7c705d381fdfd05c"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener imagen Usuario",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/uploads/usuarios/617fd8dc1910e3d725128fbb",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"uploads",
+						"usuarios",
+						"617fd8dc1910e3d725128fbb"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:8080"
+		}
+	]
+}
