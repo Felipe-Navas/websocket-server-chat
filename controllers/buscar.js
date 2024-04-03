@@ -1,126 +1,114 @@
-const { response, request } = require('express');
-const { ObjectId } = require('mongoose').Types;
+const { response, request } = require('express')
+const { ObjectId } = require('mongoose').Types
+const { Categoria, Producto, Usuario } = require('../models')
+const coleccionesPermitidas = ['categorias', 'productos', 'roles', 'usuarios']
 
-const { Categoria, Producto, Usuario } = require('../models');
+const buscarCategorias = async (termino = '', res = response) => {
+  const esMongoID = ObjectId.isValid(termino)
 
-const coleccionesPermitidas = [
-    'categorias',
-    'productos',
-    'roles',
-    'usuarios',
-];
+  // Busqueda por ID
+  if (esMongoID) {
+    const categoria = await Categoria.findById(termino)
+    return res.json({
+      results: categoria ? [categoria] : [],
+    })
+  }
 
-const buscarCategorias = async( termino = '', res = response) => {
+  // Busqueda por nombre
 
-    const esMongoID = ObjectId.isValid( termino );
+  // Con esta expresion regular, hago que no sea case sensitive
+  const regexp = new RegExp(termino, 'i')
 
-    // Busqueda por ID
-    if ( esMongoID ) {
-        const categoria = await Categoria.findById( termino );
-        return res.json({
-            results: ( categoria ) ? [ categoria ] : []
-        });
-    };
+  const categorias = await Categoria.find({ nombre: regexp, estado: true })
 
-    // Busqueda por nombre
+  res.json({
+    results: categorias,
+  })
+}
 
-    // Con esta expresion regular, hago que no sea case sensitive
-    const regexp = new RegExp( termino, 'i');
+const buscarProductos = async (termino = '', res = response) => {
+  const esMongoID = ObjectId.isValid(termino)
 
-    const categorias = await Categoria.find({ nombre: regexp, estado: true });
+  // Busqueda por ID
+  if (esMongoID) {
+    const producto = await Producto.findById(termino)
+      .populate('categoria', 'nombre')
+      .populate('usuario', 'nombre')
+    return res.json({
+      results: producto ? [producto] : [],
+    })
+  }
 
-    res.json({
-        results: categorias
-    });
-};
+  // Busqueda por nombre
 
-const buscarProductos = async( termino = '', res = response) => {
+  // Con esta expresion regular, hago que no sea case sensitive
+  const regexp = new RegExp(termino, 'i')
 
-    const esMongoID = ObjectId.isValid( termino );
+  const productos = await Producto.find({ nombre: regexp, estado: true })
+    .populate('categoria', 'nombre')
+    .populate('usuario', 'nombre')
 
-    // Busqueda por ID
-    if ( esMongoID ) {
-        const producto = await Producto.findById( termino )
-                                .populate('categoria', 'nombre')
-                                .populate('usuario', 'nombre');
-        return res.json({
-            results: ( producto ) ? [ producto ] : []
-        });
-    };
+  res.json({
+    results: productos,
+  })
+}
 
-    // Busqueda por nombre
+const buscarUsuarios = async (termino = '', res = response) => {
+  const esMongoID = ObjectId.isValid(termino)
 
-    // Con esta expresion regular, hago que no sea case sensitive
-    const regexp = new RegExp( termino, 'i');
+  // Busqueda por ID
+  if (esMongoID) {
+    const usuario = await Usuario.findById(termino)
+    return res.json({
+      results: usuario ? [usuario] : [],
+    })
+  }
 
-    const productos = await Producto.find({ nombre: regexp, estado: true })
-                            .populate('categoria', 'nombre')
-                            .populate('usuario', 'nombre');
+  // Busqueda por nombre
 
-    res.json({
-        results: productos
-    });
-};
+  // Con esta expresion regular, hago que no sea case sensitive
+  const regexp = new RegExp(termino, 'i')
 
-const buscarUsuarios = async( termino = '', res = response) => {
+  const usuarios = await Usuario.find({
+    $or: [{ nombre: regexp }, { correo: regexp }],
+    $and: [{ estado: true }],
+  })
 
-    const esMongoID = ObjectId.isValid( termino );
+  res.json({
+    results: usuarios,
+  })
+}
 
-    // Busqueda por ID
-    if ( esMongoID ) {
-        const usuario = await Usuario.findById( termino );
-        return res.json({
-            results: ( usuario ) ? [ usuario ] : []
-        });
-    };
+const buscar = async (req = request, res = response) => {
+  const { coleccion, termino } = req.params
 
-    // Busqueda por nombre
+  if (!coleccionesPermitidas.includes(coleccion)) {
+    return res.status(400).json({
+      msg: `La coleccion ${coleccion} no esta permitida. Las colecciones permitidas son: ${coleccionesPermitidas}`,
+    })
+  }
 
-    // Con esta expresion regular, hago que no sea case sensitive
-    const regexp = new RegExp( termino, 'i');
+  switch (coleccion) {
+    case 'categorias':
+      buscarCategorias(termino, res)
 
-    const usuarios = await Usuario.find({
-        $or: [ { nombre: regexp }, { correo: regexp } ],
-        $and: [ { estado: true } ]
-    });
+      break
+    case 'productos':
+      buscarProductos(termino, res)
 
-    res.json({
-        results: usuarios
-    });
-};
+      break
+    case 'usuarios':
+      buscarUsuarios(termino, res)
 
-const buscar = async(req = request, res = response) => {
+      break
 
-    const { coleccion, termino } = req.params;
-
-    if ( !coleccionesPermitidas.includes( coleccion )) {
-        return res.status(400).json({
-            msg: `La coleccion ${ coleccion } no esta permitida. Las colecciones permitidas son: ${coleccionesPermitidas}`
-        });
-    };
-
-    switch (coleccion) {
-        case 'categorias':
-            buscarCategorias( termino, res );
-            
-        break;
-        case 'productos':
-            buscarProductos( termino, res );
-
-        break;
-        case 'usuarios':
-            buscarUsuarios( termino, res );
-
-        break;
-
-        default:
-            res.status(500).json({
-                msg: 'Error interno en la coleccion'
-            });
-    };
-};
-
+    default:
+      res.status(500).json({
+        msg: 'Error interno en la coleccion',
+      })
+  }
+}
 
 module.exports = {
-    buscar
-};
+  buscar,
+}

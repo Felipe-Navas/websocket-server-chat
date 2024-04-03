@@ -74,6 +74,7 @@ class Server {
   listen() {
     this.server.listen(this.port, () => {
       console.log('Servidor corriendo en el pueto', this.port)
+      console.log(`Project is running at: http://localhost:${this.port}/`)
     })
   }
 }
